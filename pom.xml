@@ -98,15 +98,15 @@ it's going to get anything that it finds in the classpath-->
                             <version>0.2.0</version>
                         </dependency>
                     </annotationProcessorPaths>
-                    <!--we have this part in course codes,but if we uncomment it, we have a warning in build about
+                    <!--we have a warning in build about
                     mapstruct.defaultComponentModel, so we guess that in recent version no need this tag any more
                     maybe it needs more investigations-->
                     <!-- added this to get us a SpringComponent,in more detail configure MapStruct Compiler arguments to pick the Mapper objects as spring component-->
-<!--                    <compilerArgs>-->
-<!--                        <compilerArg>-->
-<!--                            -Amapstruct.defaultComponentModel=spring-->
-<!--                        </compilerArg>-->
-<!--                    </compilerArgs>-->
+                    <compilerArgs>
+                        <compilerArg>
+                            -Amapstruct.defaultComponentModel=spring
+                        </compilerArg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>

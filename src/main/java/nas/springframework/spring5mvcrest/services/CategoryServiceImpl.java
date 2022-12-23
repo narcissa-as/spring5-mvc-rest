@@ -2,13 +2,14 @@ package nas.springframework.spring5mvcrest.services;
 
 import nas.springframework.spring5mvcrest.api.v1.model.CategoryDTO;
 import nas.springframework.spring5mvcrest.domain.Category;
-import nas.springframework.spring5mvcrest.mapper.CategoryMapper;
+import nas.springframework.spring5mvcrest.api.v1.model.mapper.CategoryMapper;
 import nas.springframework.spring5mvcrest.repositories.CategoryRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryMapper categoryMapper;
     private final CategoryRepository categoryRepository;
