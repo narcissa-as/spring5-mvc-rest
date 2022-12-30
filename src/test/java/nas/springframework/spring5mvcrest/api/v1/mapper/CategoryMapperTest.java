@@ -1,7 +1,7 @@
-package nas.springframework.spring5mvcrest.mapper;
+package nas.springframework.spring5mvcrest.api.v1.mapper;
 
 import nas.springframework.spring5mvcrest.api.v1.model.CategoryDTO;
-import nas.springframework.spring5mvcrest.api.v1.model.mapper.CategoryMapper;
+import nas.springframework.spring5mvcrest.api.v1.mapper.CategoryMapper;
 import nas.springframework.spring5mvcrest.domain.Category;
 import org.junit.jupiter.api.Test;
 

@@ -2,13 +2,14 @@ package nas.springframework.spring5mvcrest.services;
 
 import nas.springframework.spring5mvcrest.api.v1.model.CategoryDTO;
 import nas.springframework.spring5mvcrest.domain.Category;
-import nas.springframework.spring5mvcrest.api.v1.model.mapper.CategoryMapper;
+import nas.springframework.spring5mvcrest.api.v1.mapper.CategoryMapper;
 import nas.springframework.spring5mvcrest.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryMapper categoryMapper;
@@ -21,7 +22,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDTO> getAllCategories() {
-        List<Category> categories = new ArrayList<>();
+        //since we use collect method we don't need to define a new List anymore, so I comment line below
+     //   List<Category> categories = new ArrayList<>();
         return categoryRepository.findAll().stream()
                 .map(categoryMapper::categoryToCategoryDto)//map method is used for mapping each category object from findAll()
                 .collect(Collectors.toList());//collect  is mostly used to collect the stream elements to a collection.

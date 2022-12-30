@@ -1,4 +1,4 @@
-package nas.springframework.spring5mvcrest.api.v1.model.mapper;
+package nas.springframework.spring5mvcrest.api.v1.mapper;
 
 import nas.springframework.spring5mvcrest.api.v1.model.CategoryDTO;
 import nas.springframework.spring5mvcrest.domain.Category;
