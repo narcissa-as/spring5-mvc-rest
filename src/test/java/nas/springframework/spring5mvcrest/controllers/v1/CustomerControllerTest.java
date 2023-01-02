@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
@@ -27,12 +28,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 //we can use below @ or "MockitoAnnotations.openMocks(this)" in SetUp, they are equal ,so I use this ann
 @ExtendWith(MockitoExtension.class)
-class CustomerControllerTest {
+class CustomerControllerTest extends AbstractRestControllerTest {
 
     @Mock
     CustomerService customerService;
@@ -94,5 +96,50 @@ class CustomerControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstname", equalTo("Sara")));
+    }
+
+    /*
+@Test
+    void createNewCustomer() throws Exception{
+
+        //given
+        CustomerDTO customerDTO =new CustomerDTO();
+        customerDTO.setId(1L);
+        customerDTO.setFirstname("Sara");
+        customerDTO.setLastname("Poly");
+
+        when(customerService.createNewCustomer(any(CustomerDTO.class))).thenReturn(customerDTO);
+
+        mockMvc.perform(post().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect()
+    }
+    */
+    @Test
+    void createNewCustomer() throws Exception {
+        //setting a customerDto as a parameter of method
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setId(1L);
+        customerDTO.setFirstname("Sara");
+        customerDTO.setLastname("Poly");
+
+        //setting a customer as return of method
+        CustomerDTO returnedDTO = new CustomerDTO();
+        returnedDTO.setId(customerDTO.getId());
+        returnedDTO.setFirstname(customerDTO.getFirstname());
+        returnedDTO.setLastname(customerDTO.getLastname());
+        returnedDTO.setCustomerUrl("/api/v1/customer/1");
+
+        when(customerService.createNewCustomer(customerDTO)).thenReturn(returnedDTO);
+
+        //then
+        mockMvc.perform(post("/api/v1/customers/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(customerDTO)))//we defined this method in AbstractRestControllerTest
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.customer_url", equalTo("/api/v1/customer/1")))
+                .andExpect(jsonPath("$.firstname",equalTo("Sara")));
+
+
     }
 }

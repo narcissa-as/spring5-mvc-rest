@@ -1,15 +1,12 @@
 package nas.springframework.spring5mvcrest.controllers.v1;
 
-import nas.springframework.spring5mvcrest.api.v1.mapper.CustomerMapper;
 import nas.springframework.spring5mvcrest.api.v1.model.CustomerDTO;
 import nas.springframework.spring5mvcrest.api.v1.model.CustomerDTOList;
 import nas.springframework.spring5mvcrest.services.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/api/v1/customers/")
@@ -32,5 +29,15 @@ public class CustomerController {
     ResponseEntity<CustomerDTO> getCustomerById(@PathVariable String id) {
         return new ResponseEntity<CustomerDTO>
                 (customerService.getCustomerById(Long.valueOf(id)), HttpStatus.OK);
+    }
+
+    @PostMapping
+    ResponseEntity<CustomerDTO> createNewCustomer(@RequestBody CustomerDTO customerDTO) {
+        // we want the object bound automatically,so we use @RequestBody which tells Spring to check and parse
+        // the body of the request and try to create a customerDTO out of that
+        CustomerDTO savedDto = customerService.createNewCustomer(customerDTO);
+        return new ResponseEntity<CustomerDTO>
+                (customerService.createNewCustomer(customerDTO)
+                        , HttpStatus.CREATED);
     }
 }

@@ -2,6 +2,7 @@ package nas.springframework.spring5mvcrest.services;
 
 import nas.springframework.spring5mvcrest.api.v1.mapper.CustomerMapper;
 import nas.springframework.spring5mvcrest.api.v1.model.CustomerDTO;
+import nas.springframework.spring5mvcrest.domain.Customer;
 import nas.springframework.spring5mvcrest.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +28,8 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.
                 findAll()
                 .stream()
-                .map(customer -> {
-                    CustomerDTO customerDTO = new CustomerDTO();
+                .map(customer -> {//map each customer with what is in {}s
+                    CustomerDTO customerDTO = new CustomerDTO();//first, we should create a new object to be able to modify it then
                     customerDTO = customerMapper.customerToCustomerDTO(customer);
                     customerDTO.setCustomerUrl("/api/v1/customer/" + customer.getId().toString());
                     return customerDTO;
@@ -38,9 +39,23 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO getCustomerById(Long id) {
-        //I used this code before and it got result too, but the better way from tutor is on next line
+        //I used this code before, and it got result too, but the better way from tutor is on next line
         // return customerMapper.customerToCustomerDTO((customerRepository.findById(id)).get());
         return customerRepository.findById(id).map(customerMapper::customerToCustomerDTO).orElseThrow(RuntimeException::new);
         //todo implement better exception handling
+    }
+
+    @Override
+    public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
+        Customer customer =
+                customerMapper.customerDTOToCustomer(customerDTO);
+        Customer savedCustomer =
+                customerRepository.save(customer);
+        CustomerDTO returnedDto =
+                customerMapper.customerToCustomerDTO(savedCustomer);
+        returnedDto.setCustomerUrl("/api/v1/customer/" +
+                savedCustomer.getId());
+
+        return returnedDto;
     }
 }

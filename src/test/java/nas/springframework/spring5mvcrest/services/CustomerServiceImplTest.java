@@ -28,7 +28,7 @@ class CustomerServiceImplTest {
     @Mock
     CustomerRepository customerRepository;
 
-    CustomerMapper customerMapper=CustomerMapper.INSTANCE;
+    CustomerMapper customerMapper = CustomerMapper.INSTANCE;
     CustomerServiceImpl customerService;
 
     @BeforeEach
@@ -36,8 +36,9 @@ class CustomerServiceImplTest {
         MockitoAnnotations.openMocks(this);
         customerService = new CustomerServiceImpl(customerRepository, customerMapper);
     }
+
     @Test
-   public void getAllCustomers() throws Exception {
+    public void getAllCustomers() throws Exception {
 
         //given
         List<Customer> customers = new ArrayList<>();
@@ -64,11 +65,12 @@ class CustomerServiceImplTest {
         assertEquals(customerDTOS.size(), 2);
 
     }
+
     @Test
-    void getCustomerById() throws Exception{
+    void getCustomerById() throws Exception {
         //given
         //setting a CustomerDTO
-        Customer customer=new Customer();
+        Customer customer = new Customer();
         customer.setId(1L);
         customer.setFirstname("Sara");
         customer.setLastname("Poly");
@@ -76,12 +78,38 @@ class CustomerServiceImplTest {
 
         when(customerRepository.findById(anyLong())).thenReturn(Optional.ofNullable(customer));
         //when
-        CustomerDTO resultCustomerDTO =customerService.getCustomerById(1L);
+        CustomerDTO resultCustomerDTO = customerService.getCustomerById(1L);
 
         //then
-        assertEquals(resultCustomerDTO.getFirstname(),"Sara");
+        assertEquals(resultCustomerDTO.getFirstname(), "Sara");
         //I added this test by myself too
         assertNotNull(resultCustomerDTO);
 
+    }
+
+    @Test
+    void createNewCustomer() throws Exception {
+        //given
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setId(1L);
+        customerDTO.setFirstname("John");
+        customerDTO.setLastname("Thompson");
+
+        Customer savedCustomer = new Customer();
+        savedCustomer.setId(1L);
+        savedCustomer.setFirstname(customerDTO.getFirstname());
+        savedCustomer.setLastname(customerDTO.getLastname());
+
+        when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
+
+        //when
+        CustomerDTO savedDto = customerService.createNewCustomer(customerDTO);
+
+        //then
+        //I added this line, not tutor
+        assertNotNull(savedDto);
+        //here we are checking from //when
+        assertEquals(savedDto.getId(), customerDTO.getId());
+        assertEquals(savedDto.getCustomerUrl(), "/api/v1/customer/1");
     }
 }
