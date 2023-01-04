@@ -20,7 +20,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,13 +27,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 //we can use below @ or "MockitoAnnotations.openMocks(this)" in SetUp, they are equal ,so I use this ann
 @ExtendWith(MockitoExtension.class)
-class CustomerControllerTest extends AbstractRestControllerTest {
+public class CustomerControllerTest extends AbstractRestControllerTest {
 
     @Mock
     CustomerService customerService;
@@ -52,7 +51,7 @@ class CustomerControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    void getListOfCustomers() throws Exception {
+    public void getListOfCustomers() throws Exception {
         //given
         List<CustomerDTO> customerDTOS = new ArrayList<>();
 
@@ -81,7 +80,7 @@ class CustomerControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    void getCustomerById() throws Exception {
+    public void getCustomerById() throws Exception {
         //given
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setId(1L);
@@ -98,23 +97,6 @@ class CustomerControllerTest extends AbstractRestControllerTest {
                 .andExpect(jsonPath("$.firstname", equalTo("Sara")));
     }
 
-    /*
-@Test
-    void createNewCustomer() throws Exception{
-
-        //given
-        CustomerDTO customerDTO =new CustomerDTO();
-        customerDTO.setId(1L);
-        customerDTO.setFirstname("Sara");
-        customerDTO.setLastname("Poly");
-
-        when(customerService.createNewCustomer(any(CustomerDTO.class))).thenReturn(customerDTO);
-
-        mockMvc.perform(post().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect()
-    }
-    */
     @Test
     void createNewCustomer() throws Exception {
         //setting a customerDto as a parameter of method
@@ -138,8 +120,33 @@ class CustomerControllerTest extends AbstractRestControllerTest {
                         .content(asJsonString(customerDTO)))//we defined this method in AbstractRestControllerTest
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.customer_url", equalTo("/api/v1/customer/1")))
-                .andExpect(jsonPath("$.firstname",equalTo("Sara")));
+                .andExpect(jsonPath("$.firstname", equalTo("Sara")));
 
+    }
 
+    @Test
+    public void updateCustomer() throws Exception {
+
+        //CustomerDTO to update
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setId(1l);
+        customerDTO.setFirstname("Sara");
+        customerDTO.setLastname("Poly");
+
+        CustomerDTO returnedDTO = new CustomerDTO();
+        returnedDTO.setId(customerDTO.getId());
+        returnedDTO.setFirstname(customerDTO.getFirstname());
+        returnedDTO.setLastname(customerDTO.getLastname());
+        returnedDTO.setCustomerUrl("/api/v1/customers/1");
+
+        when(customerService.saveCustomerByDTO(anyLong(), any(CustomerDTO.class))).thenReturn(returnedDTO);
+
+        mockMvc.perform(put("/api/v1/customers/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(customerDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstname", equalTo("Sara")))
+                .andExpect(jsonPath("$.lastname", equalTo("Poly")))
+                .andExpect(jsonPath("$.customer_url", equalTo("/api/v1/customers/1")));
     }
 }
