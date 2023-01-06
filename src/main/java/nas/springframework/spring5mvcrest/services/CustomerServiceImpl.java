@@ -43,8 +43,8 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO getCustomerById(Long id) {
         //I used this code before, and it got result too, but the better way from tutor is on next line
         // return customerMapper.customerToCustomerDTO((customerRepository.findById(id)).get());
-        return customerRepository.findById(id).map(customerMapper::customerToCustomerDTO).orElseThrow(RuntimeException::new);
-        //todo implement better exception handling
+        return customerRepository.findById(id).map(customerMapper::customerToCustomerDTO).orElseThrow(ResourceNotFoundException::new);
+
     }
 
     @Override
@@ -95,7 +95,7 @@ public class CustomerServiceImpl implements CustomerService {
 
             return returnedDTO;
 
-        }).orElseThrow(RuntimeException::new);//todo better Exception handling
+        }).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override

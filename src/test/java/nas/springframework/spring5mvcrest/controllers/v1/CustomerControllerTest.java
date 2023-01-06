@@ -3,6 +3,7 @@ package nas.springframework.spring5mvcrest.controllers.v1;
 import nas.springframework.spring5mvcrest.api.v1.model.CustomerDTO;
 import nas.springframework.spring5mvcrest.domain.Customer;
 import nas.springframework.spring5mvcrest.services.CustomerService;
+import nas.springframework.spring5mvcrest.services.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.web.JsonPath;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -46,8 +48,13 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
     @BeforeEach
     void setUp() {
         //MockitoAnnotations.openMocks(this);
+        //we have a class as a ControllerAdvice that we used it in CostumerServiceImpl, since here we just have a
+        //CustomerService mock (and not a real Bean), we need to new ControllerAdvice and inject it in our ServiceImpl
+        // class to be able to have it
+        mockMvc = MockMvcBuilders.standaloneSetup(customerController)
 
-        mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
+                .setControllerAdvice(new RestResponseEntityExceptionHandler())
+                .build();
     }
 
     @Test
@@ -184,4 +191,19 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
         verify(customerService, times(1)).deleteCustomerById(anyLong());
 
     }
+
+    @Test
+    public void ExceptionNotFound() throws Exception {
+        //we defined 2 customers so far, so we don't have any customer with id:3, and we know we'll get "not found exception" in this way
+
+        when(customerService.getCustomerById(anyLong())).thenThrow(ResourceNotFoundException.class);
+
+        mockMvc.perform(get(CustomerController.BASE_URL + "/222")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+
+
+    }
+
+
 }
