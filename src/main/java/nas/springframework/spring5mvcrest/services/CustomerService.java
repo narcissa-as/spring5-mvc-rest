@@ -1,7 +1,6 @@
 package nas.springframework.spring5mvcrest.services;
 
 import nas.springframework.spring5mvcrest.api.v1.model.CustomerDTO;
-import nas.springframework.spring5mvcrest.domain.Customer;
 
 import java.util.List;
 
@@ -13,5 +12,5 @@ public interface CustomerService {
     //update
     CustomerDTO saveCustomerByDTO(Long id, CustomerDTO customerDTO);
     CustomerDTO patchCustomer(Long id, CustomerDTO customerDTO);
-
+    void deleteCustomerById(Long id);
 }

@@ -3,6 +3,7 @@ package nas.springframework.spring5mvcrest.services;
 import nas.springframework.spring5mvcrest.api.v1.mapper.CustomerMapper;
 import nas.springframework.spring5mvcrest.api.v1.model.CustomerDTO;
 import nas.springframework.spring5mvcrest.api.v1.model.CustomerDTOList;
+import nas.springframework.spring5mvcrest.controllers.v1.CustomerController;
 import nas.springframework.spring5mvcrest.domain.Customer;
 import nas.springframework.spring5mvcrest.repositories.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +21,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class CustomerServiceImplTest {
 
@@ -110,7 +111,7 @@ class CustomerServiceImplTest {
         assertNotNull(savedDto);
         //here we are checking from //when
         assertEquals(savedDto.getId(), customerDTO.getId());
-        assertEquals(savedDto.getCustomerUrl(), "/api/v1/customer/1");
+        assertEquals(savedDto.getCustomerUrl(),  CustomerController.BASE_URL + "/1");
     }
     @Test
     public void saveCustomerByDTO() throws Exception{
@@ -131,6 +132,14 @@ class CustomerServiceImplTest {
         CustomerDTO returnedCustomerDTO =customerService.saveCustomerByDTO(1l,customerDTO);
         assertEquals(returnedCustomerDTO.getId(),1l);
         assertEquals(returnedCustomerDTO.getLastname(),"Poly");
-        assertEquals(returnedCustomerDTO.getCustomerUrl(),"/api/v1/customer/1");
+        assertEquals(returnedCustomerDTO.getCustomerUrl(), CustomerController.BASE_URL +"/1");
+    }
+    @Test
+    void deleteCustomer(){
+        Long id =1l;
+
+        customerRepository.deleteById(id);
+
+        verify(customerRepository,times(1)).deleteById(anyLong()) ;
     }
 }

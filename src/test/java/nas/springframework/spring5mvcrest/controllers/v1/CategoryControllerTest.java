@@ -63,8 +63,8 @@ public class CategoryControllerTest {
         when(categoryService.getAllCategories()).thenReturn(categories);
 
         //then
-        mockMvc.perform(get("/api/v1/categories/")
-                        // mockMvc.perform(get("/api/v1/categories/")
+        mockMvc.perform(get(CategoryController.BASE_URL )
+                        // mockMvc.perform(get(CategoryController.BASE_URL )
                         .contentType(MediaType.APPLICATION_JSON))
                 //JSONPath is a query language for JSON, similar to XPath for XML. It allows you to select and extract data from a JSON
                 // document. You use a JSONPath expression to traverse the path to an element in the JSON structure.
@@ -85,7 +85,7 @@ public class CategoryControllerTest {
         when(categoryService.getCategoryByName(any())).thenReturn(categoryDTO);
 
         //then
-        mockMvc.perform(get("/api/v1/categories/jim").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(CategoryController.BASE_URL +"/jim").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", equalTo(NAME)));
     }

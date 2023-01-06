@@ -2,6 +2,7 @@ package nas.springframework.spring5mvcrest.services;
 
 import nas.springframework.spring5mvcrest.api.v1.mapper.CustomerMapper;
 import nas.springframework.spring5mvcrest.api.v1.model.CustomerDTO;
+import nas.springframework.spring5mvcrest.controllers.v1.CustomerController;
 import nas.springframework.spring5mvcrest.domain.Customer;
 import nas.springframework.spring5mvcrest.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .map(customer -> {//map each customer with what is in {}s
                     CustomerDTO customerDTO = new CustomerDTO();//first, we should create a new object to be able to modify it then
                     customerDTO = customerMapper.customerToCustomerDTO(customer);
-                    customerDTO.setCustomerUrl("/api/v1/customer/" + customer.getId().toString());
+                    customerDTO.setCustomerUrl(getCustomerUrl(customer.getId()));
                     return customerDTO;
                 })
                 .collect(Collectors.toList());
@@ -59,7 +60,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         Customer savedCustomer = customerRepository.save(customer);
         CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(savedCustomer);
-        customerDTO.setCustomerUrl("/api/v1/customer/" + savedCustomer.getId());
+        customerDTO.setCustomerUrl(getCustomerUrl(savedCustomer.getId()));
         return customerDTO;
 
     }
@@ -90,10 +91,22 @@ public class CustomerServiceImpl implements CustomerService {
             CustomerDTO returnedDTO =
                     customerMapper.customerToCustomerDTO(customerRepository.save(customer));
 
-            returnedDTO.setCustomerUrl("/api/v1/customers" + id);
+            returnedDTO.setCustomerUrl(getCustomerUrl(id));
 
             return returnedDTO;
 
         }).orElseThrow(RuntimeException::new);//todo better Exception handling
+    }
+
+    @Override
+    public void deleteCustomerById(Long id) {
+
+        customerRepository.deleteById(id);
+    }
+
+    private String getCustomerUrl(Long id) {
+
+        return CustomerController.BASE_URL + "/" + id;
+
     }
 }
