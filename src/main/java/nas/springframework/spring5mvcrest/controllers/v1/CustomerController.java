@@ -7,12 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-@Controller
+//@Controller
+//we change @controller with @RestController that is for spring5 and newer and more convenient
+@RestController
 @RequestMapping(CustomerController.BASE_URL)
 public class CustomerController {
 
-    public static final String BASE_URL="/api/v1/customers";
+    public static final String BASE_URL = "/api/v1/customers";
 
     private final CustomerService customerService;
 
@@ -20,50 +21,50 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    // in the new way of @RestController we don't need to define
+    //and use ResponseEntity in every method of this class, so we eliminate the ResponseEntity
+    // extra codes and just use @ResponseStatus(Http.ok)
     @GetMapping
-    ResponseEntity<CustomerDTOList> getListOfCustomers() {
-        return new ResponseEntity<CustomerDTOList>(
-                new
-                        CustomerDTOList(customerService.getAllCustomers()), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+   public CustomerDTOList getListOfCustomers() {
+
+        return new CustomerDTOList(customerService.getAllCustomers());
 
     }
 
     @GetMapping({"/{id}"})
-    ResponseEntity<CustomerDTO> getCustomerById(@PathVariable String id) {
-        return new ResponseEntity<CustomerDTO>
-                (customerService.getCustomerById(Long.valueOf(id)), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+   public CustomerDTO getCustomerById(@PathVariable String id) {
+
+        return customerService.getCustomerById(Long.valueOf(id));
     }
 
     @PostMapping
-    ResponseEntity<CustomerDTO> createNewCustomer(@RequestBody CustomerDTO customerDTO) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public CustomerDTO createNewCustomer(@RequestBody CustomerDTO customerDTO) {
         // we want the object bound automatically,so we use @RequestBody which tells Spring to check and parse
         // the body of the request and try to create a customerDTO out of that
-        CustomerDTO savedDto = customerService.createNewCustomer(customerDTO);
-        return new ResponseEntity<CustomerDTO>
-                (customerService.createNewCustomer(customerDTO)
-                        , HttpStatus.CREATED);
+        return customerService.createNewCustomer(customerDTO);
     }
 
     @PutMapping({"/{id}"})
-    public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable
-                                                              Long id, @RequestBody CustomerDTO customerDTO) {
-        return new ResponseEntity<CustomerDTO>
-                (customerService.saveCustomerByDTO(id, customerDTO), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public CustomerDTO updateCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
+
+              return   customerService.saveCustomerByDTO(id, customerDTO);
     }
 
     @PatchMapping({"/{id}"})
-    public ResponseEntity<CustomerDTO> PatchCustomer(@PathVariable
-                                                             Long id, @RequestBody CustomerDTO customerDTO) {
-        return new ResponseEntity<CustomerDTO>
-                (customerService.patchCustomer(id, customerDTO), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public CustomerDTO PatchCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
+        return customerService.patchCustomer(id, customerDTO);
 
     }
 
     @DeleteMapping({"/{id}"})
-    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteCustomer(@PathVariable Long id) {
 
         customerService.deleteCustomerById(id);
-
-        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }
