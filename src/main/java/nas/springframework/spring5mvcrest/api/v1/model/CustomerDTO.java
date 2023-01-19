@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CustomerDTO {
 
+    //private Long id; we don't need id, we pass id through front by @Pathvariable
 
-    private Long id;
     private String firstname;
     private String lastname;
     @JsonProperty("customer_url")// the way this prop would be shown in a json object

@@ -3,8 +3,10 @@ package nas.springframework.spring5mvcrest.bootstrap;
 
 import nas.springframework.spring5mvcrest.domain.Category;
 import nas.springframework.spring5mvcrest.domain.Customer;
+import nas.springframework.spring5mvcrest.domain.Vendor;
 import nas.springframework.spring5mvcrest.repositories.CategoryRepository;
 import nas.springframework.spring5mvcrest.repositories.CustomerRepository;
+import nas.springframework.spring5mvcrest.repositories.VendorRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -18,16 +20,19 @@ public class Bootstrap implements CommandLineRunner {
 
     private final CategoryRepository categoryRepository;
     private final CustomerRepository customerRepository;
+    private final VendorRepository vendorRepository;
 
-    public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository) {
+    public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository, VendorRepository vendorRepository) {
         this.categoryRepository = categoryRepository;
         this.customerRepository = customerRepository;
+        this.vendorRepository = vendorRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
         loadCategories();
         loadCustomers();
+        loadVendors();
     }
 
     private void loadCategories() {
@@ -72,6 +77,22 @@ public class Bootstrap implements CommandLineRunner {
         customerRepository.save(customer2);
 
         System.out.println("Customer Data Loaded: " + customerRepository.count());
+    }
+
+    public void loadVendors() {
+
+        Vendor vendor1 = new Vendor();
+        vendor1.setId(1l);
+        vendor1.setName("Western Tasty Fruits Ltd.");
+
+        Vendor vendor2 = new Vendor();
+        vendor2.setId(2l);
+        vendor2.setName("Exotic Fruits Company");
+
+        vendorRepository.save(vendor1);
+        vendorRepository.save(vendor2);
+
+        System.out.println("Vendor Data loaded: " + vendorRepository.count());
     }
 }
 
