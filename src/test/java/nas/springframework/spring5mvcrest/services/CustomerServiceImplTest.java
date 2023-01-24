@@ -92,7 +92,6 @@ class CustomerServiceImplTest {
     void createNewCustomer() throws Exception {
         //given
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setId(1L);
         customerDTO.setFirstname("John");
         customerDTO.setLastname("Thompson");
 
@@ -110,7 +109,7 @@ class CustomerServiceImplTest {
         //I added this line, not tutor
         assertNotNull(savedDto);
         //here we are checking from //when
-        assertEquals(savedDto.getId(), customerDTO.getId());
+        assertEquals(savedDto.getFirstname(), customerDTO.getFirstname());
         assertEquals(savedDto.getCustomerUrl(),  CustomerController.BASE_URL + "/1");
     }
     @Test
@@ -130,7 +129,6 @@ class CustomerServiceImplTest {
 
         //when
         CustomerDTO returnedCustomerDTO =customerService.saveCustomerByDTO(1l,customerDTO);
-        assertEquals(returnedCustomerDTO.getId(),1l);
         assertEquals(returnedCustomerDTO.getLastname(),"Poly");
         assertEquals(returnedCustomerDTO.getCustomerUrl(), CustomerController.BASE_URL +"/1");
     }

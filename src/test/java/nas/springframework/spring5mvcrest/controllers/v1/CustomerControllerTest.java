@@ -63,13 +63,11 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
         List<CustomerDTO> customerDTOS = new ArrayList<>();
 
         CustomerDTO customerDTO1 = new CustomerDTO();
-        customerDTO1.setId(1L);
         customerDTO1.setFirstname("Michael");
         customerDTO1.setLastname("Weston");
         customerDTO1.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
         CustomerDTO customerDTO2 = new CustomerDTO();
-        customerDTO2.setId(2L);
         customerDTO2.setFirstname("Sam");
         customerDTO2.setLastname("Axe");
 
@@ -90,7 +88,6 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
     public void getCustomerById() throws Exception {
         //given
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setId(1L);
         customerDTO.setFirstname("Sara");
         customerDTO.setLastname("Poly");
         customerDTO.setCustomerUrl(CustomerController.BASE_URL + "/1");
@@ -108,13 +105,11 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
     void createNewCustomer() throws Exception {
         //setting a customerDto as a parameter of method
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setId(1L);
         customerDTO.setFirstname("Sara");
         customerDTO.setLastname("Poly");
 
         //setting a customer as return of method
         CustomerDTO returnedDTO = new CustomerDTO();
-        returnedDTO.setId(customerDTO.getId());
         returnedDTO.setFirstname(customerDTO.getFirstname());
         returnedDTO.setLastname(customerDTO.getLastname());
         returnedDTO.setCustomerUrl(CustomerController.BASE_URL + "/1");
@@ -136,12 +131,10 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
 
         //CustomerDTO to update
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setId(1l);
         customerDTO.setFirstname("Sara");
         customerDTO.setLastname("Poly");
 
         CustomerDTO returnedDTO = new CustomerDTO();
-        returnedDTO.setId(customerDTO.getId());
         returnedDTO.setFirstname(customerDTO.getFirstname());
         returnedDTO.setLastname(customerDTO.getLastname());
         returnedDTO.setCustomerUrl(CustomerController.BASE_URL + "/1");
@@ -162,7 +155,7 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
         //given
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setFirstname("Sara");
-        customerDTO.setId(1l);
+
 
         CustomerDTO returnedDTO = new CustomerDTO();
         returnedDTO.setFirstname(customerDTO.getFirstname());
