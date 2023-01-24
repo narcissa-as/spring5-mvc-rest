@@ -1,5 +1,7 @@
 package nas.springframework.spring5mvcrest.controllers.v1;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import nas.springframework.spring5mvcrest.api.v1.model.CustomerDTO;
 import nas.springframework.spring5mvcrest.api.v1.model.CustomerDTOList;
 import nas.springframework.spring5mvcrest.services.CustomerService;
@@ -7,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+@Api(description = "This is my customer controller")//using swagger properties
 //@Controller
 //we change @controller with @RestController that is for spring5 and newer and more convenient
 @RestController
@@ -21,12 +25,14 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    @ApiOperation(value = "This will get a list of customers.", notes =
+            "There are some notes about the API.")
     // in the new way of @RestController we don't need to define
     //and use ResponseEntity in every method of this class, so we eliminate the ResponseEntity
     // extra codes and just use @ResponseStatus(Http.ok)
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-   public CustomerDTOList getListOfCustomers() {
+    public CustomerDTOList getListOfCustomers() {
 
         return new CustomerDTOList(customerService.getAllCustomers());
 
@@ -34,7 +40,7 @@ public class CustomerController {
 
     @GetMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-   public CustomerDTO getCustomerById(@PathVariable String id) {
+    public CustomerDTO getCustomerById(@PathVariable String id) {
 
         return customerService.getCustomerById(Long.valueOf(id));
     }
@@ -51,7 +57,7 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.OK)
     public CustomerDTO updateCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
 
-              return   customerService.saveCustomerByDTO(id, customerDTO);
+        return customerService.saveCustomerByDTO(id, customerDTO);
     }
 
     @PatchMapping({"/{id}"})
