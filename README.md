@@ -115,5 +115,8 @@ Add Docker support
 
 📄 License
 This project is part of personal learning based on Spring Framework 5: Beginner to Guru
-Available under MIT license. 
+Available under MIT license.
 
+yaml
+Copy
+Edit
