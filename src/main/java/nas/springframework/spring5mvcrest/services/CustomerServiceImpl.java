@@ -2,7 +2,7 @@ package nas.springframework.spring5mvcrest.services;
 
 import nas.springframework.spring5mvcrest.api.v1.mapper.CustomerMapper;
 import nas.springframework.spring5mvcrest.api.v1.model.CustomerDTO;
-import nas.springframework.spring5mvcrest.controllers.v1.CustomerController;
+//import nas.springframework.spring5mvcrest.controllers.v1.CustomerController;
 import nas.springframework.spring5mvcrest.domain.Customer;
 import nas.springframework.spring5mvcrest.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+/*
 @Service
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
@@ -24,7 +24,8 @@ public class CustomerServiceImpl implements CustomerService {
     //this part of code is interesting for me, we want to have a property of customerUrl, we define it in CustomerDTO
     //not Customer domain. and then since we don't want to save it in DB and repository because this is not a domain
     //property need to be saved but a property that just need in web application to generate a URL related to this
-    // specific Customer. so we generate it in service layer, and here at 34 line,and in the {} part we define the URL
+    // specific Customer. so we generate it in service layer,
+    // and here at 34 line,and in the {} part we define the URL
     //property and return it from this part of code out as one CustomerDTO , and collect it in a collector and return it out.
     public List<CustomerDTO> getAllCustomers() {
         return customerRepository.
@@ -43,7 +44,8 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO getCustomerById(Long id) {
         //I used this code before, and it got result too, but the better way from tutor is on next line
         // return customerMapper.customerToCustomerDTO((customerRepository.findById(id)).get());
-        return customerRepository.findById(id).map(customerMapper::customerToCustomerDTO).orElseThrow(ResourceNotFoundException::new);
+        return customerRepository.findById(id).map(customerMapper::customerToCustomerDTO).
+                orElseThrow(ResourceNotFoundException::new);
 
     }
 
@@ -104,9 +106,9 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.deleteById(id);
     }
 
-    private String getCustomerUrl(Long id) {
+  private String getCustomerUrl(Long id) {
 
         return CustomerController.BASE_URL + "/" + id;
 
     }
-}
+}*/

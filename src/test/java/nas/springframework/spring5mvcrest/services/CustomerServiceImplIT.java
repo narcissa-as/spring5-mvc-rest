@@ -1,3 +1,4 @@
+/*
 package nas.springframework.spring5mvcrest.services;
 
 import nas.springframework.spring5mvcrest.api.v1.mapper.CustomerMapper;
@@ -109,4 +110,4 @@ public class CustomerServiceImplIT {
         //return first id
         return customers.get(0).getId();
     }
-}
+}*/

@@ -1,3 +1,4 @@
+/*
 package nas.springframework.spring5mvcrest.services;
 
 import nas.springframework.spring5mvcrest.api.v1.mapper.CustomerMapper;
@@ -140,4 +141,4 @@ class CustomerServiceImplTest {
 
         verify(customerRepository,times(1)).deleteById(anyLong()) ;
     }
-}
+}*/
