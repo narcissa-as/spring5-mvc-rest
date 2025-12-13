@@ -104,15 +104,6 @@ Access H2 console at:
 http://localhost:8080/h2-console
 (JDBC URL: jdbc:h2:mem:testdb)
 
-🧪 Future Improvements
-Add unit and integration tests
-
-Add Swagger documentation
-
-Convert to OpenAPI 3 specification
-
-Add Docker support
-
 📄 License
 This project is part of personal learning based on Spring Framework 5: Beginner to Guru
 Available under MIT license.
