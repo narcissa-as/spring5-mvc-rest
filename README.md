@@ -28,6 +28,7 @@ The codebase is structured to reflect **real-world Spring MVC applications**, em
 * **RESTful API design**
 * **Jackson** (JSON serialization/deserialization)
 * **Lombok** (boilerplate reduction)
+* **Swagger / OpenAPI** (API documentation)
 * **Apache Maven**
 * **JUnit** (testing support)
 
@@ -92,8 +93,10 @@ mvn clean package
 
 ## **Testing**
 
-* Includes **unit testing dependencies**
-* Designed to support **controller and service layer testing**
+* **Unit testing** using **JUnit**
+* **Behavior-Driven Development (BDD)** style tests with **Mockito**
+* **Mocking** of dependencies to isolate service and controller layers
+* Verification of **REST behavior and business logic** independently
 
 ---
 
