@@ -1,113 +1,117 @@
-# 📦 Spring5 MVC REST API
+# **Spring REST Client Examples**
 
-A sample RESTful API built using Spring Boot 2, Spring MVC, and Spring Data JPA — based on the *Spring Framework 5: Beginner to Guru* course. This project demonstrates basic CRUD operations, RESTful principles, exception handling, and integration with an H2 in-memory database.
+## **Overview**
 
----
+This project is a **Java Spring Boot application** that demonstrates how to consume external **REST APIs** using different client approaches provided by the Spring ecosystem. It includes practical examples of **synchronous** and **reactive** HTTP communication, data mapping, error handling, and simple UI rendering.
 
-## 🚀 Features
+The application is structured as a **clean, production-style Spring Boot project** and can be used as a reference for building REST clients in real-world backend systems.
 
-- RESTful CRUD APIs for `Customer` and `Vendor`
-- Custom exception handling with `@ControllerAdvice`
-- Data persistence using Spring Data JPA and H2
-- DTO pattern to decouple entities from API
-- Bootstrap data on application startup
-- Maven-based build
+## **Key Features**
 
----
+* **Consumption of external REST APIs** using Spring REST clients
+* **Synchronous HTTP calls** with `RestTemplate`
+* **Reactive HTTP calls** with `WebClient` (Spring WebFlux)
+* **Centralized REST client configuration**
+* **Domain-driven API response mapping**
+* **Service and controller separation**
+* **Basic UI rendering** using Thymeleaf
+* **Maven-based build and dependency management**
 
-## 🛠️ Technologies Used
+## **Technology Stack**
 
-- Java 17
-- Spring Boot 2.x
-- Spring MVC
-- Spring Data JPA
-- Lombok
-- H2 In-Memory Database
-- Maven
+* **Java**
+* **Spring Boot 2.7.x**
+* **Spring Web (RestTemplate)**
+* **Spring WebFlux (WebClient)**
+* **Spring MVC**
+* **Thymeleaf**
+* **Lombok**
+* **Jackson** (JSON serialization/deserialization)
+* **Apache HttpClient**
+* **Bootstrap** (via WebJars)
+* **Maven**
+* **JUnit / TestNG / Reactor Test**
 
----
+## **Project Structure**
 
-## 📁 Project Structure
+```text
+src/main/java
+ └── nas.springframework.springrestclientexamples5
+     ├── config
+     │   └── RESTTemplateConfig.java
+     ├── controller
+     │   ├── APIFruitsController.java
+     │   └── UserController.java
+     ├── service
+     │   ├── APIService.java
+     │   ├── APIServiceImpl.java
+     │   ├── APIFruitService.java
+     │   └── APIFruitServiceImpl.java
+     ├── api/domain
+     │   ├── Customer.java
+     │   ├── CustomerData.java
+     │   ├── User.java
+     │   └── UserData.java
+     ├── RestTemplateExamples.java
+     └── SpringRestClientExamples5Application.java
 
-src/
-├── main/
-│ ├── java/com/example/springmvcrest/
-│ │ ├── controllers/
-│ │ ├── domain/
-│ │ ├── repositories/
-│ │ ├── services/
-│ │ └── bootstrap/
-│ └── resources/
-│ └── application.properties
+src/main/resources
+ ├── templates
+ └── application.properties
+```
 
-yaml
-Copy
-Edit
+## **REST Client Implementation**
 
----
+### **RestTemplate**
 
-## 🧪 Running the Project
+* Used for **synchronous HTTP communication**
+* Demonstrates **GET requests**, header configuration, URI building, and error handling
+* Configured via a **dedicated configuration class**
 
-### Prerequisites:
-- Java 17+
-- Maven 3+
+### **WebClient (Reactive)**
 
-### Run using Maven:
+* Used for **non-blocking, reactive HTTP communication**
+* Suitable for **modern, scalable applications**
+* Integrated via **Spring WebFlux**
+
+## **External APIs**
+
+The application consumes **publicly available REST APIs** to demonstrate real HTTP interactions, response parsing, and domain mapping.
+
+## **Running the Application**
+
+### **Prerequisites**
+
+* **Java 11 or higher**
+* **Maven**
+
+### **Steps**
+
+1. Clone the repository
+2. Navigate to the project root
+3. Run the application:
+
 ```bash
 mvn spring-boot:run
-Or run the packaged JAR:
-bash
-Copy
-Edit
+```
+
+4. Access the application via browser or REST endpoints once the server is running
+
+## **Build**
+
+```bash
 mvn clean package
-java -jar target/spring5-mvc-rest-0.0.1-SNAPSHOT.jar
-Application will start at:
-http://localhost:8080/api/v1/customers
-http://localhost:8080/api/v1/vendors
+```
 
-📡 API Endpoints
-🔹 Customer Controller
-Method	Endpoint	Description
-GET	/api/v1/customers	List all customers
-GET	/api/v1/customers/{id}	Get customer by ID
-POST	/api/v1/customers	Create new customer
-PUT	/api/v1/customers/{id}	Update customer
-PATCH	/api/v1/customers/{id}	Partial update
-DELETE	/api/v1/customers/{id}	Delete customer
+## **Testing**
 
-🔹 Vendor Controller
-Method	Endpoint	Description
-GET	/api/v1/vendors	List all vendors
-GET	/api/v1/vendors/{id}	Get vendor by ID
-POST	/api/v1/vendors	Create new vendor
-PUT	/api/v1/vendors/{id}	Update vendor
-PATCH	/api/v1/vendors/{id}	Partial update
-DELETE	/api/v1/vendors/{id}	Delete vendor
+The project includes **test dependencies and examples** for validating REST client behavior using standard Spring testing tools.
 
-❗ Error Handling
-The project uses @ControllerAdvice to handle exceptions globally.
-Example error response when a resource is not found:
+## **Purpose**
 
-json
-Copy
-Edit
-{
-  "message": "Customer not found",
-  "status": 404
-}
-💾 Database
-Uses H2 in-memory database
+This project showcases **practical patterns** for consuming RESTful services in **Spring-based applications**. It reflects **clean layering**, proper client configuration, and **multiple HTTP client strategies** commonly used in professional backend development.
 
-Sample data is loaded automatically on startup
+## **Notes**
 
-Access H2 console at:
-http://localhost:8080/h2-console
-(JDBC URL: jdbc:h2:mem:testdb)
-
-📄 License
-This project is part of personal learning based on Spring Framework 5: Beginner to Guru
-Available under MIT license.
-
-yaml
-Copy
-Edit
+* The codebase is intentionally kept **simple and focused** on REST client usage
+* Suitable as a **reference project or starter template** for backend integrations
