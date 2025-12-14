@@ -1,82 +1,69 @@
-# **Spring REST Client Examples**
+# **Spring MVC REST Application**
 
 ## **Overview**
 
-This project is a **Java Spring Boot application** that demonstrates how to consume external **REST APIs** using different client approaches provided by the Spring ecosystem. It includes practical examples of **synchronous** and **reactive** HTTP communication, data mapping, error handling, and simple UI rendering.
+This repository contains a **Java Spring MVC application** that demonstrates how to design and expose **RESTful APIs** using the Spring Framework. The project focuses on clean layering, request/response handling, data serialization, and REST best practices commonly used in professional backend systems.
 
-The application is structured as a **clean, production-style Spring Boot project** and can be used as a reference for building REST clients in real-world backend systems.
+The codebase is structured to reflect **real-world Spring MVC applications**, emphasizing clarity, maintainability, and separation of concerns.
+
+---
 
 ## **Key Features**
 
-* **Consumption of external REST APIs** using Spring REST clients
-* **Synchronous HTTP calls** with `RestTemplate`
-* **Reactive HTTP calls** with `WebClient` (Spring WebFlux)
-* **Centralized REST client configuration**
-* **Domain-driven API response mapping**
-* **Service and controller separation**
-* **Basic UI rendering** using Thymeleaf
-* **Maven-based build and dependency management**
+* **RESTful API design** using Spring MVC
+* **Controller–Service architecture**
+* **HTTP request mapping** with `@GetMapping`, `@PostMapping`, etc.
+* **JSON serialization/deserialization** using Jackson
+* **Request validation and response handling**
+* **Exception handling strategy** for REST APIs
+* **Maven-based project structure**
+
+---
 
 ## **Technology Stack**
 
 * **Java**
-* **Spring Boot 2.7.x**
-* **Spring Web (RestTemplate)**
-* **Spring WebFlux (WebClient)**
-* **Spring MVC**
-* **Thymeleaf**
-* **Lombok**
+* **Spring Framework 5 (Spring MVC)**
+* **Spring Web**
+* **RESTful API design**
 * **Jackson** (JSON serialization/deserialization)
-* **Apache HttpClient**
-* **Bootstrap** (via WebJars)
-* **Maven**
-* **JUnit / TestNG / Reactor Test**
+* **Lombok** (boilerplate reduction)
+* **Apache Maven**
+* **JUnit** (testing support)
+
+---
 
 ## **Project Structure**
 
 ```text
 src/main/java
- └── nas.springframework.springrestclientexamples5
-     ├── config
-     │   └── RESTTemplateConfig.java
+ └── com.example.spring5mvcrest
      ├── controller
-     │   ├── APIFruitsController.java
-     │   └── UserController.java
+     │   └── RestController.java
      ├── service
-     │   ├── APIService.java
-     │   ├── APIServiceImpl.java
-     │   ├── APIFruitService.java
-     │   └── APIFruitServiceImpl.java
-     ├── api/domain
-     │   ├── Customer.java
-     │   ├── CustomerData.java
-     │   ├── User.java
-     │   └── UserData.java
-     ├── RestTemplateExamples.java
-     └── SpringRestClientExamples5Application.java
+     │   ├── ApiService.java
+     │   └── ApiServiceImpl.java
+     ├── model
+     │   └── DomainObject.java
+     └── SpringMvcRestApplication.java
 
 src/main/resources
- ├── templates
  └── application.properties
 ```
 
-## **REST Client Implementation**
+---
 
-### **RestTemplate**
+## **REST API Design & Implementation Details**
 
-* Used for **synchronous HTTP communication**
-* Demonstrates **GET requests**, header configuration, URI building, and error handling
-* Configured via a **dedicated configuration class**
+* **@RestController** for exposing REST endpoints
+* **Request mapping annotations** (`@GetMapping`, `@PostMapping`, etc.)
+* **DTO / domain object mapping** for clean request and response models
+* **JSON-based communication** using Jackson
+* **Centralized exception handling** using `@ControllerAdvice`
+* **HTTP status management** with `ResponseEntity`
+* **Layered architecture** (Controller → Service → Domain)
 
-### **WebClient (Reactive)**
-
-* Used for **non-blocking, reactive HTTP communication**
-* Suitable for **modern, scalable applications**
-* Integrated via **Spring WebFlux**
-
-## **External APIs**
-
-The application consumes **publicly available REST APIs** to demonstrate real HTTP interactions, response parsing, and domain mapping.
+---
 
 ## **Running the Application**
 
@@ -85,17 +72,15 @@ The application consumes **publicly available REST APIs** to demonstrate real HT
 * **Java 11 or higher**
 * **Maven**
 
-### **Steps**
-
-1. Clone the repository
-2. Navigate to the project root
-3. Run the application:
+### **Run Locally**
 
 ```bash
-mvn spring-boot:run
+mvn clean spring-boot:run
 ```
 
-4. Access the application via browser or REST endpoints once the server is running
+Once started, the REST endpoints are available on the configured local port.
+
+---
 
 ## **Build**
 
@@ -103,15 +88,22 @@ mvn spring-boot:run
 mvn clean package
 ```
 
+---
+
 ## **Testing**
 
-The project includes **test dependencies and examples** for validating REST client behavior using standard Spring testing tools.
+* Includes **unit testing dependencies**
+* Designed to support **controller and service layer testing**
+
+---
 
 ## **Purpose**
 
-This project showcases **practical patterns** for consuming RESTful services in **Spring-based applications**. It reflects **clean layering**, proper client configuration, and **multiple HTTP client strategies** commonly used in professional backend development.
+This project demonstrates how to build **clean, maintainable REST APIs** using **Spring MVC**. It highlights common backend patterns such as layered architecture, request mapping, and JSON-based communication that are expected in professional Java backend roles.
+
+---
 
 ## **Notes**
 
-* The codebase is intentionally kept **simple and focused** on REST client usage
-* Suitable as a **reference project or starter template** for backend integrations
+* The project is intentionally focused on **core REST concepts**
+* Suitable as a **reference implementation** or portfolio project for backend development
